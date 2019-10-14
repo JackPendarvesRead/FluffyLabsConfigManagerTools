@@ -68,11 +68,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Drawer\ButtonDrawer.cs" />
     <Compile Include="Drawer\ConditionalDrawer.cs" />
     <Compile Include="Infrastructure\Conditional.cs" />
     <Compile Include="Infrastructure\SpecialCharacter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ButtonUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
