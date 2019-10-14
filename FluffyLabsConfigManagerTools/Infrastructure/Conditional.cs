@@ -1,5 +1,5 @@
-﻿using BepConfigManagerTest.Drawers;
-using BepInEx.Configuration;
+﻿using BepInEx.Configuration;
+using FluffyLabsConfigManagerTools.Drawers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace BepConfigManagerTest.Infrastructure
+namespace FluffyLabsConfigManagerTools.Infrastructure
 {
     struct Conditional<T>
         where T : struct, IConvertible
@@ -29,8 +29,8 @@ namespace BepConfigManagerTest.Infrastructure
                 {
                     try
                     {
-                        var split = s.Split(Special.Delimiter);
-                        return new GenericConditional<T>
+                        var split = s.Split(SpecialCharacter.Delimiter);
+                        return new Conditional<T>
                         {
                             Value = (T)Convert.ChangeType(split[0], typeof(T)),
                             Condition = bool.Parse(split[1])
@@ -46,8 +46,8 @@ namespace BepConfigManagerTest.Infrastructure
                 {
                     try
                     {
-                        var x = (GenericConditional<T>)obj;
-                        return string.Join(Special.Delimiter.ToString(), x.Value.ToString(), x.Condition.ToString());
+                        var x = (Conditional<T>)obj;
+                        return string.Join(SpecialCharacter.Delimiter.ToString(), x.Value.ToString(), x.Condition.ToString());
                     }
                     catch (Exception ex)
                     {

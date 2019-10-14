@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BepConfigManagerTest.Infrastructure;
 using BepInEx.Configuration;
 using ConfigurationManager;
+using FluffyLabsConfigManagerTools.Infrastructure;
 using UnityEngine;
 
-namespace BepConfigManagerTest.Drawers
+namespace FluffyLabsConfigManagerTools.Drawers
 {
     class ConditionalDrawer<T>
         where T : struct, IConvertible
@@ -18,7 +18,7 @@ namespace BepConfigManagerTest.Drawers
             return (seb) =>
             {
                 GUILayout.BeginHorizontal();
-                var x = (GenericConditional<T>)seb.Get();
+                var x = (Conditional<T>)seb.Get();
                 var condition = x.Condition;
 
                 string label = "Disabled";
