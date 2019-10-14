@@ -1,4 +1,5 @@
 ﻿using ConfigurationManager;
+using FluffyLabsConfigManagerTools.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +9,16 @@ using UnityEngine;
 
 namespace FluffyLabsConfigManagerTools.Drawers
 {
-    internal class ButtonDrawer
+    internal class ButtonDrawer : IDrawer
     {
-        public Action<SettingEntryBase> Draw(string buttonName, Action buttonLogic)
+        private readonly Dictionary<string, Action> buttonDictionary;
+
+        public ButtonDrawer(Dictionary<string, Action> buttonDictionary)
         {
-            return (seb) =>
-            {
-                GUILayout.BeginVertical();
-                if (GUILayout.Button(buttonName, GUILayout.ExpandWidth(true)))
-                {
-                    buttonLogic();
-                }
-                GUILayout.EndVertical();
-            };
+            this.buttonDictionary = buttonDictionary;
         }
 
-        public Action<SettingEntryBase> DrawMultiple(Dictionary<string, Action> buttonDictionary)
+        public Action<SettingEntryBase> Draw()
         {
             return (seb) =>
             {

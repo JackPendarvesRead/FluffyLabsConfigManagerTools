@@ -73,6 +73,7 @@
     <Compile Include="Infrastructure\Conditional.cs" />
     <Compile Include="Infrastructure\ConfigurationManagerAttributes.cs" />
     <Compile Include="Infrastructure\SpecialCharacter.cs" />
+    <Compile Include="Interfaces\IDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ButtonUtil.cs" />
     <Compile Include="Util\ConditionalUtil.cs" />

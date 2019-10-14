@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using BepInEx.Configuration;
 using ConfigurationManager;
 using FluffyLabsConfigManagerTools.Infrastructure;
+using FluffyLabsConfigManagerTools.Interfaces;
 using UnityEngine;
 
 namespace FluffyLabsConfigManagerTools.Drawers
 {
-    internal class ConditionalDrawer<T>
+    internal class ConditionalDrawer<T> : IDrawer
         where T : struct, IConvertible
     {
         public Action<SettingEntryBase> Draw()
