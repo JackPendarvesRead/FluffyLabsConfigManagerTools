@@ -40,7 +40,7 @@ namespace FluffyLabsConfigManagerTools.Util
             AddMultipleButtonConfig(configDefinition.Section, configDefinition.Key, buttonDic);
         }
         public void AddMultipleButtonConfig(string section, string key, Dictionary<string, Action> buttonDic)
-        {
+        {            
             plugin.Config.AddSetting<string>(
                 section,
                 key,
@@ -48,7 +48,8 @@ namespace FluffyLabsConfigManagerTools.Util
                 new BepInEx.Configuration.ConfigDescription(
                     "This is a button",
                     null,
-                    new ButtonDrawer().DrawMultiple(buttonDic)
+                    new ButtonDrawer().DrawMultiple(buttonDic), 
+                    new ConfigurationManagerAttributes { HideDefaultButton = true }
                     ));
         }
     }
