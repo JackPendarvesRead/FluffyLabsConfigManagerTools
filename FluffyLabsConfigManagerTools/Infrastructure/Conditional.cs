@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace FluffyLabsConfigManagerTools.Infrastructure
 {
-    struct Conditional<T>
+    public struct Conditional<T>
         where T : struct, IConvertible
     {
         static Conditional()
