@@ -14,14 +14,12 @@ namespace FluffyLabsConfigManagerTools.Drawers
         {
             return (seb) =>
             {
-                bool PressButton()
-                {
-                    return GUILayout.Button(buttonName, GUILayout.ExpandWidth(true));
-                }
-                if (PressButton())
+                GUILayout.BeginVertical();
+                if (GUILayout.Button(buttonName, GUILayout.ExpandWidth(true)))
                 {
                     buttonLogic();
                 }
+                GUILayout.EndVertical();
             };
         }
 
@@ -29,17 +27,15 @@ namespace FluffyLabsConfigManagerTools.Drawers
         {
             return (seb) =>
             {
+                GUILayout.BeginVertical();
                 foreach (var button in buttonDictionary)
                 {
-                    bool PressButton()
-                    {
-                        return GUILayout.Button(button.Key, GUILayout.ExpandWidth(true));
-                    }
-                    if (PressButton())
+                    if (GUILayout.Button(button.Key, GUILayout.ExpandWidth(true)))
                     {
                         button.Value();
                     }
                 }
+                GUILayout.EndVertical();
             };
         }
     }
