@@ -1,11 +1,130 @@
 ﻿# FluffyLabsConfigManagerTools
 
+This is a library which extends the functionality of BepInEx.ConfigurationManager
 
-## Installation
+## Setup For Users
 
-Requires intallation of Bepinex and R2API. 
+This on its own is not a mod but a library which other mods can use to help make different configuration formats.
 
-Place `TeleportVote.dll` inside of "/Risk of Rain 2/Bepinex/Plugins/"
+If you are using any mods which depend on this then you will need to have this mod installed along with any dependencies it has.
+
+To install all you will need to do is download this mod and put `FluffyLabsConfigManagerTools.dll` and `ConfigurationManager.dll` (from Bepinex.ConfigurationManager dependency) put into your `Bepinex/plugins` folder.
+
+## Setup For Developers
+
+Add `FluffyLabsConfigManagerTools.dll` as a reference to your plugin project. If you do not know how to do this then consult [documentation](https://docs.microsoft.com/en-us/visualstudio/ide/how-to-add-or-remove-references-by-using-the-reference-manager?view=vs-2019)
+
+Once you have added the reference correctly you will have access to {FluffyLabsConfigManagerTools} namespace.
+
+At the top of your BepInPlugin .cs file you will need to add the following using statements:
+- `using FluffyLabsConfigManagerTools.Util;`
+This namespace gives you access to utilities which make it easier for you to add the custom configuration types (e.g. `ButtonUtil`)
+
+- `using FluffyLabsConfigManagerTools.Infrastructure;`
+This namespace gives you access to the classes and structs which hold the types you will need in your custom ConfigEntry
+
+## Utilities
+
+All utilities have XML comments so should show intellisense when you use them in Visual Studio. Here is a brief summary of what all of the current utilities offer.
+
+### ButtonUtil
+Adds a button configuration with customisable Action
+
+Example:
+```csharp
+[BepInDependency("com.bepis.r2api")]
+[BepInPlugin("com.FluffyMods.FluffyLabsTest", "FluffyLabsTest", "0.0.0")]
+public class FluffyLabsTest2 : BaseUnityPlugin
+{
+	public void Awake()
+	{
+		var buttonUtil = new ButtonUtil(this);
+		buttonUtil.AddButtonConfig("Button", "Button", "Describe this button", GetDic());        
+	}
+
+	private Dictionary<string, Action> GetDic()
+	{
+		return new Dictionary<string, Action>
+			{
+				{ "Button01",  () => Debug.Log("Button 1 press") },
+				{ "Button02",  () => Debug.Log("Button 2 press") },
+				{ "Button03",  Example }
+			};
+	}
+
+	private void Example()
+	{
+		Debug.Log("Button 3 press");
+	}
+}
+```
+
+### ConditionalUtil
+Adds a configuration which has a value and can be enabled/disabled
+
+Example:
+```csharp
+[BepInDependency("com.bepis.r2api")]
+[BepInPlugin("com.FluffyMods.FluffyLabsTest", "FluffyLabsTest", "0.0.0")]
+public class FluffyLabsTest : BaseUnityPlugin
+{
+    private ConfigEntry<Conditional<float>> FloatConfig;
+    private ConfigEntry<Conditional<int>> IntConfig;
+    private ConfigEntry<Conditional<double>> DoubleConfig;
+
+	public void Awake()
+	{
+		const string conditionalSectionName = "Conditional";
+
+        var conditionUtil = new ConditionalUtil(this);
+		FloatConfig = conditionUtil.AddConditionalConfig<float>(
+			conditionalSectionName,
+            "Float", 
+            0.5f, 
+            false, 
+            new ConfigDescription("This is float"));
+
+        IntConfig = conditionUtil.AddConditionalConfig<int>(
+            conditionalSectionName,
+            "Integer", 
+            0, 
+            false, 
+            new ConfigDescription("This is int"));
+
+        DoubleConfig = conditionUtil.AddConditionalConfig<double>(
+            conditionalSectionName,
+            "Double", 
+            6.789, 
+            true, 
+            new ConfigDescription("This is double"));
+	}
+}   
+```
+
+### MacroUtil
+Adds a configuration specifically designed for adding a macro configuration
+
+Example:
+```csharp
+[BepInDependency("com.bepis.r2api")]
+[BepInPlugin("com.FluffyMods.FluffyLabsTest", "FluffyLabsTest", "0.0.0")]
+public class FluffyLabsTest : BaseUnityPlugin
+{
+    private ConfigEntry<Macro> MyMacro1;
+    private ConfigEntry<Macro> MyMacro2;
+    private ConfigEntry<Macro> MyMacro3;
+       
+    public void Awake()
+    {
+        const string macroSectionName = "Macro";
+
+        var macroUtil = new MacroUtil(this);
+        MyMacro1 = macroUtil.AddMacroConfig(macroSectionName, "macro 1", "description", false);
+        MyMacro2 = macroUtil.AddMacroConfig(macroSectionName, "macro 2", "description", false);
+        MyMacro3 = macroUtil.AddMacroConfig(macroSectionName, "macro 3", "description", true);
+    }
+}   
+```
 
 ## Contact
 
