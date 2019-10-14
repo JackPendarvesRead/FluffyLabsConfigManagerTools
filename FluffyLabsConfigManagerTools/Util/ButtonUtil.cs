@@ -10,19 +10,39 @@ using System.Threading.Tasks;
 
 namespace FluffyLabsConfigManagerTools.Util
 {
+    /// <summary>
+    /// Class to help add button configurations
+    /// </summary>
     public class ButtonUtil
     {
         private readonly BaseUnityPlugin plugin;
 
+        /// <summary>
+        /// Class to help add button configurations
+        /// </summary>
+        /// <param name="plugin">BaseUnityPlugin for your mod (usually = `this`)</param>
         public ButtonUtil(BaseUnityPlugin plugin)
         {
             this.plugin = plugin;
         }
        
+        /// <summary>
+        /// Add a button configuration
+        /// </summary>
+        /// <param name="configDefinition">Bepinex ConfigDefinition of button</param>
+        /// <param name="description">Button description</param>
+        /// <param name="buttonDic">Dictionary of buttons where string=buttonName, Action=buttonLogic</param>
         public void AddButtonConfig(ConfigDefinition configDefinition, string description, Dictionary<string, Action> buttonDic)
         {
             AddButtonConfig(configDefinition.Section, configDefinition.Key, description, buttonDic);
         }
+        /// <summary>
+        /// Add a button configuration
+        /// </summary>
+        /// <param name="section">Button config section</param>
+        /// <param name="key">Button config key</param>
+        /// <param name="description">Button description</param>
+        /// <param name="buttonDic">Dictionary of buttons where string=buttonName, Action=buttonLogic</param>
         public void AddButtonConfig(string section, string key, string description, Dictionary<string, Action> buttonDic)
         {            
             plugin.Config.AddSetting<string>(
