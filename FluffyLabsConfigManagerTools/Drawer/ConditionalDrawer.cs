@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BepInEx.Configuration;
 using ConfigurationManager;
+using FluffyLabsConfigManagerTools.Extension;
 using FluffyLabsConfigManagerTools.Infrastructure;
 using FluffyLabsConfigManagerTools.Interfaces;
 using UnityEngine;
@@ -21,7 +22,6 @@ namespace FluffyLabsConfigManagerTools.Drawers
                 GUILayout.BeginHorizontal();
                 var x = (Conditional<T>)seb.Get();
                 var condition = x.Condition;
-
                 string label = "Disabled";
                 if (x.Condition)
                 {
@@ -35,15 +35,15 @@ namespace FluffyLabsConfigManagerTools.Drawers
                 }
                 if (condition)
                 {
-                    var number = x.Value;
-                    var result = GUILayout.TextField(number.ToString(), GUILayout.ExpandWidth(true));
-                    if (result != number.ToString())
+                    var number = x.Value.FloatToString<T>();
+                    var result = GUILayout.TextField(number, GUILayout.ExpandWidth(true));
+                    if (result != number)
                     {
                         try
                         {
                             x.Value = (T)Convert.ChangeType(result, typeof(T));
                             seb.Set(x);
-                        }
+                        }    
                         catch (Exception ex)
                         {
                             Debug.LogError(ex);
