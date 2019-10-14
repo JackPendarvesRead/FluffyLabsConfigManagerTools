@@ -26,7 +26,7 @@ namespace FluffyLabsConfigManagerTools.Util
                 new Macro
                 {
                     KeyboardShortcut = new BepInEx.Configuration.KeyboardShortcut(UnityEngine.KeyCode.None),
-                    MacroString = "",
+                    MacroString = ">Type Macro Here<",
                     RepeatNumber = 1
                 },
                 new ConfigDescription(

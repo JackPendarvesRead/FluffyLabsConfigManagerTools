@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using FluffyLabsConfigManagerTools.Drawers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,12 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
 {
     public struct Macro
     {
+        static Macro()
+        {            
+            TomlTypeConverter.AddConverter(typeof(Macro), Macro.GetTypeConverter());
+            ConfigurationManager.ConfigurationManager.RegisterCustomSettingDrawer(typeof(Macro), new MacroDrawer().Draw());            
+        }
+
         public string MacroString { get; set; }
         public int RepeatNumber { get; set; }
         public BepInEx.Configuration.KeyboardShortcut KeyboardShortcut { get; set; }

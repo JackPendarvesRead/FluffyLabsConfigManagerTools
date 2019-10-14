@@ -42,11 +42,11 @@ namespace FluffyLabsConfigManagerTools.Drawers
                 wordWrap = true
             };
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("MacroString");
+            //GUILayout.BeginHorizontal();
+            //GUILayout.Label("MacroString");
             var macro = (Macro)seb.Get();
             var text = macro.MacroString;
-            var result = GUILayout.TextField(text, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            var result = GUILayout.TextField(text, style, GUILayout.ExpandWidth(true), GUILayout.MinHeight(80f));
             if (result != text)
             {
                 try
@@ -59,7 +59,7 @@ namespace FluffyLabsConfigManagerTools.Drawers
                     Debug.LogError(ex);
                 }
             }
-            GUILayout.EndHorizontal();
+            //GUILayout.EndHorizontal();
         }
 
         private void DrawRepeatCountBox(SettingEntryBase seb)
@@ -94,6 +94,9 @@ namespace FluffyLabsConfigManagerTools.Drawers
         private bool edittingKbs = false;
         private void DrawKeyboardShortcutBox(SettingEntryBase seb)
         {
+
+            //TODO fix the multiple view edit!!
+
             GUILayout.BeginHorizontal();
             var macro = (Macro)seb.Get();
             if (edittingKbs)
