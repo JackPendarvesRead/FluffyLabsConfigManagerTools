@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace FluffyLabsConfigManagerTools.Drawers
 {
-    class ConditionalDrawer<T>
+    internal class ConditionalDrawer<T>
         where T : struct, IConvertible
     {
         public Action<SettingEntryBase> Draw()

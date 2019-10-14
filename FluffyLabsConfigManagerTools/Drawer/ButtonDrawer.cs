@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace FluffyLabsConfigManagerTools.Drawers
 {
-    public class ButtonDrawer
+    internal class ButtonDrawer
     {
         public Action<SettingEntryBase> Draw(string buttonName, Action buttonLogic)
         {
