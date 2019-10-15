@@ -21,7 +21,9 @@ At the top of your BepInPlugin .cs file you will need to add the following using
 This namespace gives you access to utilities which make it easier for you to add the custom configuration types (e.g. `ButtonUtil`)
 
 - `using FluffyLabsConfigManagerTools.Infrastructure;`
-This namespace gives you access to the classes and structs which hold the types you will need in your custom ConfigEntry
+This namespace gives you access to the classes and structs which hold the types you will need in your custom ConfigEntry (e.g. `Conditional<T>`)
+
+To enable XML comments intellisense be sure to leave `FluffyLabsConfigManagerTools.xml` in the same install location as `FluffyLabsConfigManagerTools.dll`
 
 ## Utilities
 
@@ -132,5 +134,5 @@ If you have any issues you can usually find me on the ROR2 modding discord (@Flu
 
 ## Changelog
 
-v1.0.1 
+v1.0.0
 - Released
