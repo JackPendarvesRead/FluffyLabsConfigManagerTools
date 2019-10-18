@@ -12,16 +12,16 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
     internal class Conditional<T>
         where T : struct, IConvertible
     {
+        public T Value { get; set; }
+        public bool Condition { get; set; }
+
         static Conditional()
         {
             TomlTypeConverter.AddConverter(typeof(Conditional<T>), Conditional<T>.GetTypeConverter());
             ConfigurationManager.ConfigurationManager.RegisterCustomSettingDrawer(typeof(Conditional<T>), new ConditionalDrawer<T>().Draw());
         }
 
-        public T Value { get; set; }
-        public bool Condition { get; set; }
-
-        public static TypeConverter GetTypeConverter()
+        private static TypeConverter GetTypeConverter()
         {
             return new TypeConverter
             {

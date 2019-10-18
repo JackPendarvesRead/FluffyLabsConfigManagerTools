@@ -11,17 +11,17 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
 {
     internal class Macro
     {
+        public string MacroString { get; set; }
+        public int RepeatNumber { get; set; }
+        public BepInEx.Configuration.KeyboardShortcut KeyboardShortcut { get; set; }
+
         static Macro()
         {            
             TomlTypeConverter.AddConverter(typeof(Macro), Macro.GetTypeConverter());
             ConfigurationManager.ConfigurationManager.RegisterCustomSettingDrawer(typeof(Macro), new MacroDrawer().Draw());            
         }
 
-        public string MacroString { get; set; }
-        public int RepeatNumber { get; set; }
-        public BepInEx.Configuration.KeyboardShortcut KeyboardShortcut { get; set; }
-
-        public static TypeConverter GetTypeConverter()
+        private static TypeConverter GetTypeConverter()
         {
             return new TypeConverter
             {
