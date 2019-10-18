@@ -130,6 +130,39 @@ public class FluffyLabsTest : BaseUnityPlugin
 }   
 ```
 
+### Combined example
+
+The following is an example showing a mixture of the utils together.
+
+```
+    [BepInPlugin("com.FluffyMods.FluffyLabsTest", "FluffyLabsTest", "0.0.0")]
+    public class FluffyLabsTest : BaseUnityPlugin
+    {
+        private ConditionalConfigEntry<int> ConditionalConf;
+        private MacroConfigEntry MacroConf;
+
+        public void Awake()
+        {
+            var cUtil = new ConditionalUtil(this);
+            ConditionalConf = cUtil.AddConditionalConfig<int>("con", "con", 5, true, new ConfigDescription("desc"));
+
+            var bUtil = new ButtonUtil(this);
+            bUtil.AddButtonConfig("Button", "button", "description", GetDic());
+
+            var mUtil = new MacroUtil(this);
+            MacroConf = mUtil.AddMacroConfig("Macro", "Macro", "Description", false);
+        }
+        
+        private Dictionary<string, Action> GetDic()
+        {
+            return new Dictionary<string, Action>
+            {
+                { "button", () => { Debug.Log("Button action" } }
+            };
+        }
+    }   
+```
+
 ## Contact
 
 If you have any issues you can usually find me on the ROR2 modding discord (@Fluffatron). Please bear in mind that as with all mods here this is something I do in my spare time so may not always be able to immediately fix any issues that you come up with. 
