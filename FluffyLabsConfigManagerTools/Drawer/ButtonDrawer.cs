@@ -22,12 +22,15 @@ namespace FluffyLabsConfigManagerTools.Drawers
         {
             return (seb) =>
             {
+                var labelString = seb.Get().ToString();
+                GUILayout.Label(labelString, GUILayout.Width(100f));
                 GUILayout.BeginVertical();
                 foreach (var button in buttonDictionary)
                 {
                     if (GUILayout.Button(button.Key, GUILayout.ExpandWidth(true)))
-                    {
+                    {                        
                         button.Value();
+                        seb.Set(button.Key);
                     }
                 }
                 GUILayout.EndVertical();
