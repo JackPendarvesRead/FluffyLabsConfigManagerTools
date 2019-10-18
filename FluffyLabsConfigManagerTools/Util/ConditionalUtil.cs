@@ -26,7 +26,7 @@ namespace FluffyLabsConfigManagerTools.Util
         }
 
         /// <summary>
-        /// 
+        /// Class to add conditional configurations
         /// </summary>
         /// <typeparam name="T">Conditional type</typeparam>
         /// <param name="section">Conditional config section</param>
@@ -35,15 +35,17 @@ namespace FluffyLabsConfigManagerTools.Util
         /// <param name="defaultCondition">Default condition</param>
         /// <param name="description">Description of conditional config</param>
         /// <returns>ConfigEntry</returns>
-        public ConfigEntry<Conditional<T>> AddConditionalConfig<T>(string section, string key, T defaultValue, bool defaultCondition, ConfigDescription description)
+        public ConditionalConfigEntry<T> AddConditionalConfig<T>(string section, string key, T defaultValue, bool defaultCondition, ConfigDescription description)
             where T : struct, IConvertible
         {
-            return plugin.Config
+            var entry = plugin.Config
                 .AddSetting<Conditional<T>>(                
                 section,
                 key,
                 new Conditional<T> { Condition = defaultCondition, Value = defaultValue },
-                description);                
+                description);
+
+            return new ConditionalConfigEntry<T>(entry);
         }
     }
 }

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace FluffyLabsConfigManagerTools.Infrastructure
 {
-    public struct Macro
+    internal class Macro
     {
         static Macro()
         {            

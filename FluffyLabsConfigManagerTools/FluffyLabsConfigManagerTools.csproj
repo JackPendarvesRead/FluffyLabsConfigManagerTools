@@ -77,8 +77,10 @@
     <Compile Include="Extension\StringExtensionMethods.cs" />
     <Compile Include="Extension\TypeExtensionMethods.cs" />
     <Compile Include="Infrastructure\Conditional.cs" />
+    <Compile Include="Infrastructure\ConditionalConfigEntry.cs" />
     <Compile Include="Infrastructure\ConfigurationManagerAttributes.cs" />
     <Compile Include="Infrastructure\Macro.cs" />
+    <Compile Include="Infrastructure\MacroConfigEntry.cs" />
     <Compile Include="Infrastructure\SpecialCharacter.cs" />
     <Compile Include="Interfaces\IDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -18,9 +18,9 @@ namespace FluffyLabsConfigManagerTools.Util
             this.plugin = plugin;
         }
 
-        public ConfigEntry<Macro> AddMacroConfig(string section, string key, string description, bool isAdvanced)
+        public MacroConfigEntry AddMacroConfig(string section, string key, string description, bool isAdvanced)
         {
-            return plugin.Config.AddSetting<Macro>(                
+            var entry = plugin.Config.AddSetting<Macro>(                
                 section,                
                 key,               
                 new Macro
@@ -35,6 +35,8 @@ namespace FluffyLabsConfigManagerTools.Util
                     new ConfigurationManagerAttributes { IsAdvanced = isAdvanced }
                     )
                 );
+
+            return new MacroConfigEntry(entry);
         }
     }
 }
