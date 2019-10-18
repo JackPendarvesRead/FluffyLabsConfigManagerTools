@@ -27,7 +27,9 @@ To enable XML comments intellisense be sure to leave `FluffyLabsConfigManagerToo
 
 ## Utilities
 
-All utilities have XML comments so should show intellisense when you use them in Visual Studio. Here is a brief summary of what all of the current utilities offer.
+The most useful way to use this lib is through the utilities. The following is a quick summary of what there is and how it is used.
+
+Note: All utilities have XML comments so should show intellisense when you use them in Visual Studio.
 
 ### ButtonUtil
 Adds a button configuration with customisable Action
@@ -70,9 +72,9 @@ Example:
 [BepInPlugin("com.FluffyMods.FluffyLabsTest", "FluffyLabsTest", "0.0.0")]
 public class FluffyLabsTest : BaseUnityPlugin
 {
-    private ConfigEntry<Conditional<float>> FloatConfig;
-    private ConfigEntry<Conditional<int>> IntConfig;
-    private ConfigEntry<Conditional<double>> DoubleConfig;
+    private ConditionalConfigEntry<float> FloatConfig;
+    private ConditionalConfigEntry<int> IntConfig;
+    private ConditionalConfigEntry<double> DoubleConfig;
 
 	public void Awake()
 	{
@@ -112,9 +114,9 @@ Example:
 [BepInPlugin("com.FluffyMods.FluffyLabsTest", "FluffyLabsTest", "0.0.0")]
 public class FluffyLabsTest : BaseUnityPlugin
 {
-    private ConfigEntry<Macro> MyMacro1;
-    private ConfigEntry<Macro> MyMacro2;
-    private ConfigEntry<Macro> MyMacro3;
+    private MacroConfigEntry MyMacro1;
+    private MacroConfigEntry MyMacro2;
+    private MacroConfigEntry MyMacro3;
        
     public void Awake()
     {

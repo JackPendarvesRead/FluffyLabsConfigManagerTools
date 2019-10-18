@@ -20,7 +20,7 @@ namespace FluffyLabsConfigManagerTools.Util
         /// <summary>
         /// Class to help add button configurations
         /// </summary>
-        /// <param name="plugin">BaseUnityPlugin for your mod (usually = `this`)</param>
+        /// <param name="plugin">The plugin to add ConfigEntry to</param>
         public ButtonUtil(BaseUnityPlugin plugin)
         {
             this.plugin = plugin;
