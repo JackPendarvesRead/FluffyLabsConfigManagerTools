@@ -14,15 +14,15 @@ namespace FluffyLabsConfigManagerTools.Util
     /// </summary>
     public class ConditionalUtil
     {
-        private readonly BaseUnityPlugin plugin;
+        private ConfigFile config;
 
         /// <summary>
         /// Class to add conditional configurations
         /// </summary>
-        /// <param name="plugin">The plugin to add ConfigEntry to</param>
-        public ConditionalUtil(BaseUnityPlugin plugin)
+        /// <param name="config">The ConfigFile which to add ConfigEntry to</param>
+        public ConditionalUtil(ConfigFile config)
         {
-            this.plugin = plugin;
+            this.config = config;
         }
 
         /// <summary>
@@ -38,8 +38,7 @@ namespace FluffyLabsConfigManagerTools.Util
         public ConditionalConfigEntry<T> AddConditionalConfig<T>(string section, string key, T defaultValue, bool defaultCondition, ConfigDescription description)
             where T : struct, IConvertible
         {
-            var entry = plugin.Config
-                .AddSetting<Conditional<T>>(                
+            var entry = config.AddSetting<Conditional<T>>(                
                 section,
                 key,
                 new Conditional<T> { Condition = defaultCondition, Value = defaultValue },

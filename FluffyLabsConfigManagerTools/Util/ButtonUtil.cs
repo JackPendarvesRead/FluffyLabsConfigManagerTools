@@ -15,17 +15,17 @@ namespace FluffyLabsConfigManagerTools.Util
     /// </summary>
     public class ButtonUtil
     {
-        private readonly BaseUnityPlugin plugin;
+        private readonly ConfigFile config;
 
         /// <summary>
         /// Class to help add button configurations
         /// </summary>
-        /// <param name="plugin">The plugin to add ConfigEntry to</param>
-        public ButtonUtil(BaseUnityPlugin plugin)
+        /// <param name="config">The ConfigFile which to add ConfigEntry to</param>
+        public ButtonUtil(ConfigFile config)
         {
-            this.plugin = plugin;
+            this.config = config;
         }
-       
+
         /// <summary>
         /// Add a button configuration
         /// </summary>
@@ -45,7 +45,7 @@ namespace FluffyLabsConfigManagerTools.Util
         /// <param name="buttonDic">Dictionary of buttons where string=buttonName, Action=buttonLogic</param>
         public void AddButtonConfig(string section, string key, string description, Dictionary<string, Action> buttonDic)
         {            
-            plugin.Config.AddSetting<string>(
+            config.AddSetting<string>(
                 section,
                 key,
                 "",

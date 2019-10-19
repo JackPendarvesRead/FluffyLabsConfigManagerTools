@@ -14,15 +14,15 @@ namespace FluffyLabsConfigManagerTools.Util
     /// </summary>
     public class MacroUtil
     {
-        private readonly BaseUnityPlugin plugin;
+        private readonly ConfigFile config;
 
         /// <summary>
         /// Set up a MacroConfigEntry specifically designed to be used for macro configurations
         /// </summary>
-        /// <param name="plugin">The plugin to add ConfigEntry to</param>
-        public MacroUtil(BaseUnityPlugin plugin)
+        /// <param name="config">The ConfigFile which to add ConfigEntry to</param>
+        public MacroUtil(ConfigFile config)
         {
-            this.plugin = plugin;
+            this.config = config;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace FluffyLabsConfigManagerTools.Util
         /// <returns>MacroConfigEntry</returns>
         public MacroConfigEntry AddMacroConfig(string section, string key, string description, bool isAdvanced)
         {
-            var entry = plugin.Config.AddSetting<Macro>(                
+            var entry = config.AddSetting<Macro>(                
                 section,                
                 key,               
                 new Macro
