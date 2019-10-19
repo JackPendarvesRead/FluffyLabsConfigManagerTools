@@ -13,7 +13,7 @@ namespace FluffyLabsConfigManagerTools.Util
     /// <summary>
     /// Class to help add button configurations
     /// </summary>
-    public class ButtonUtil
+    public sealed class ButtonUtil
     {
         private readonly ConfigFile config;
 
@@ -29,22 +29,38 @@ namespace FluffyLabsConfigManagerTools.Util
         /// <summary>
         /// Add a button configuration
         /// </summary>
-        /// <param name="configDefinition">Bepinex ConfigDefinition of button</param>
+        /// <param name="section">Button config section</param>
+        /// <param name="key">Button config key</param>
         /// <param name="description">Button description</param>
         /// <param name="buttonDic">Dictionary of buttons where string=buttonName, Action=buttonLogic</param>
-        public void AddButtonConfig(ConfigDefinition configDefinition, string description, Dictionary<string, Action> buttonDic)
+        public void AddButtonConfig(string section, 
+            string key, 
+            string description, 
+            Dictionary<string, Action> buttonDic)
         {
-            AddButtonConfig(configDefinition.Section, configDefinition.Key, description, buttonDic);
+            AddButtonConfig(section,
+                key,
+                description,
+                buttonDic,
+                new ConfigurationManagerAttributes { HideDefaultButton = true }
+                );
         }
+
         /// <summary>
-        /// Add a button configuration
+        /// Add a button configuration - define your own ConfigurationManagerAttributes
         /// </summary>
         /// <param name="section">Button config section</param>
         /// <param name="key">Button config key</param>
         /// <param name="description">Button description</param>
         /// <param name="buttonDic">Dictionary of buttons where string=buttonName, Action=buttonLogic</param>
-        public void AddButtonConfig(string section, string key, string description, Dictionary<string, Action> buttonDic)
-        {            
+        /// <param name="attributes">Define your own custom attributes</param>
+        public void AddButtonConfig(
+            string section, 
+            string key, 
+            string description,
+            Dictionary<string, Action> buttonDic, 
+            ConfigurationManagerAttributes attributes)
+        {
             config.AddSetting<string>(
                 section,
                 key,
@@ -52,8 +68,8 @@ namespace FluffyLabsConfigManagerTools.Util
                 new BepInEx.Configuration.ConfigDescription(
                     description,
                     null,
-                    new ButtonDrawer(buttonDic).Draw(), 
-                    new ConfigurationManagerAttributes { HideDefaultButton = true }
+                    new ButtonDrawer(buttonDic).Draw(),
+                    attributes
                     ));
         }
     }

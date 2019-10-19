@@ -12,7 +12,7 @@ namespace FluffyLabsConfigManagerTools.Util
     /// <summary>
     /// Set up a MacroConfigEntry specifically designed to be used for macro configurations
     /// </summary>
-    public class MacroUtil
+    public sealed class MacroUtil
     {
         private readonly ConfigFile config;
 
@@ -31,9 +31,28 @@ namespace FluffyLabsConfigManagerTools.Util
         /// <param name="section">MacroConfigEntry section</param>
         /// <param name="key">MacroConfigEntry key</param>
         /// <param name="description">MacroConfigEntry description</param>
+        /// <returns>MacroConfigEntry</returns>
+        public MacroConfigEntry AddMacroConfig(
+            string section,
+            string key,
+            string description)
+        {
+            return AddMacroConfig(section, key, description, new ConfigurationManagerAttributes());
+        }
+
+
+        /// <summary>
+        /// Set up a MacroConfigEntry specifically designed to be used for macro configurations
+        /// </summary>
+        /// <param name="section">MacroConfigEntry section</param>
+        /// <param name="key">MacroConfigEntry key</param>
+        /// <param name="description">MacroConfigEntry description</param>
         /// <param name="isAdvanced">true if setting is advanced</param>
         /// <returns>MacroConfigEntry</returns>
-        public MacroConfigEntry AddMacroConfig(string section, string key, string description, bool isAdvanced)
+        public MacroConfigEntry AddMacroConfig(string section, 
+        string key, 
+        string description, 
+        ConfigurationManagerAttributes attributes)
         {
             var entry = config.AddSetting<Macro>(                
                 section,                
@@ -47,7 +66,7 @@ namespace FluffyLabsConfigManagerTools.Util
                 new ConfigDescription(
                     description,    
                     null,
-                    new ConfigurationManagerAttributes { IsAdvanced = isAdvanced }
+                    attributes
                     )
                 );
 

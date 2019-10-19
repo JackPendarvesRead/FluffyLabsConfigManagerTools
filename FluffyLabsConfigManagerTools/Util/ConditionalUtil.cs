@@ -12,7 +12,7 @@ namespace FluffyLabsConfigManagerTools.Util
     /// <summary>
     /// Class to add conditional configurations
     /// </summary>
-    public class ConditionalUtil
+    public sealed class ConditionalUtil
     {
         private ConfigFile config;
 
@@ -35,7 +35,12 @@ namespace FluffyLabsConfigManagerTools.Util
         /// <param name="defaultCondition">Default condition</param>
         /// <param name="description">Description of conditional config</param>
         /// <returns>ConfigEntry</returns>
-        public ConditionalConfigEntry<T> AddConditionalConfig<T>(string section, string key, T defaultValue, bool defaultCondition, ConfigDescription description)
+        public ConditionalConfigEntry<T> AddConditionalConfig<T>(
+            string section,
+            string key,
+            T defaultValue, 
+            bool defaultCondition, 
+            ConfigDescription description)
             where T : struct, IConvertible
         {
             var entry = config.AddSetting<Conditional<T>>(                

@@ -23,7 +23,7 @@
     /// You can read more and see examples in the readme at https://github.com/BepInEx/BepInEx.ConfigurationManager
     /// You can optionally remove fields that you won't use from this class, it's the same as leaving them null.
     /// </remarks>
-    internal sealed class ConfigurationManagerAttributes
+    public sealed class ConfigurationManagerAttributes
     {
         /// <summary>
         /// Should the setting be shown as a percentage (only use with value range settings).
