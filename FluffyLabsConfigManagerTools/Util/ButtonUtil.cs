@@ -33,15 +33,39 @@ namespace FluffyLabsConfigManagerTools.Util
         /// <param name="key">Button config key</param>
         /// <param name="description">Button description</param>
         /// <param name="buttonDic">Dictionary of buttons where string=buttonName, Action=buttonLogic</param>
-        public void AddButtonConfig(string section, 
-            string key, 
-            string description, 
+        public ConfigEntry<string> AddButtonConfig(string section,
+            string key,
+            string description,
             Dictionary<string, Action> buttonDic)
         {
-            AddButtonConfig(section,
+            return AddButtonConfig(section,
                 key,
                 description,
                 buttonDic,
+                true,
+                new ConfigurationManagerAttributes { HideDefaultButton = true }
+                );
+        }
+
+        /// <summary>
+        /// Add a button configuration
+        /// </summary>
+        /// <param name="section">Button config section</param>
+        /// <param name="key">Button config key</param>
+        /// <param name="description">Button description</param>
+        /// <param name="buttonDic">Dictionary of buttons where string=buttonName, Action=buttonLogic</param>
+        /// <param name="showLastPressedString">Set true to show string next to buttons of last button pressed</param>
+        public ConfigEntry<string> AddButtonConfig(string section, 
+            string key, 
+            string description, 
+            Dictionary<string, Action> buttonDic,
+            bool showLastPressedString)
+        {
+            return AddButtonConfig(section,
+                key,
+                description,
+                buttonDic,
+                showLastPressedString,
                 new ConfigurationManagerAttributes { HideDefaultButton = true }
                 );
         }
@@ -53,22 +77,24 @@ namespace FluffyLabsConfigManagerTools.Util
         /// <param name="key">Button config key</param>
         /// <param name="description">Button description</param>
         /// <param name="buttonDic">Dictionary of buttons where string=buttonName, Action=buttonLogic</param>
+        /// <param name="showLastPressedString">Set true to show string next to buttons of last button pressed</param>
         /// <param name="attributes">Define your own custom attributes</param>
-        public void AddButtonConfig(
+        public ConfigEntry<string> AddButtonConfig(
             string section, 
             string key, 
             string description,
-            Dictionary<string, Action> buttonDic, 
+            Dictionary<string, Action> buttonDic,
+            bool showLastPressedString,
             ConfigurationManagerAttributes attributes)
         {
-            config.AddSetting<string>(
+            return config.AddSetting<string>(
                 section,
                 key,
                 "",
                 new BepInEx.Configuration.ConfigDescription(
                     description,
                     null,
-                    new ButtonDrawer(buttonDic).Draw(),
+                    new ButtonDrawer(buttonDic, showLastPressedString).Draw(),
                     attributes
                     ));
         }

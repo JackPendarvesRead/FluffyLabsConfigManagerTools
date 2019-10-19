@@ -12,18 +12,23 @@ namespace FluffyLabsConfigManagerTools.Drawers
     internal class ButtonDrawer : IDrawer
     {
         private readonly Dictionary<string, Action> buttonDictionary;
+        private readonly bool drawLabel;
 
-        public ButtonDrawer(Dictionary<string, Action> buttonDictionary)
+        public ButtonDrawer(Dictionary<string, Action> buttonDictionary, bool drawLabel)
         {
             this.buttonDictionary = buttonDictionary;
+            this.drawLabel = drawLabel;
         }
 
         public Action<SettingEntryBase> Draw()
         {
             return (seb) =>
             {
-                var labelString = seb.Get().ToString();
-                GUILayout.Label(labelString, GUILayout.Width(100f));
+                if (drawLabel)
+                {
+                    var labelString = seb.Get().ToString();
+                    GUILayout.Label(labelString, GUILayout.Width(100f));
+                }               
                 GUILayout.BeginVertical();
                 foreach (var button in buttonDictionary)
                 {
