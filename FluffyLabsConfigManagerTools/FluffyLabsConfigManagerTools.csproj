@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Drawer\ButtonDrawer.cs" />
     <Compile Include="Drawer\ConditionalDrawer.cs" />
+    <Compile Include="Drawer\DrawerConstants.cs" />
     <Compile Include="Drawer\MacroDrawer.cs" />
     <Compile Include="Extension\StringExtensionMethods.cs" />
     <Compile Include="Extension\TypeExtensionMethods.cs" />

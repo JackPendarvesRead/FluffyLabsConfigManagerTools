@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace FluffyLabsConfigManagerTools.Drawers
+namespace FluffyLabsConfigManagerTools.Drawer
 {
     internal class ButtonDrawer : IDrawer
     {
@@ -27,7 +27,7 @@ namespace FluffyLabsConfigManagerTools.Drawers
                 if (drawLabel)
                 {
                     var labelString = seb.Get().ToString();
-                    GUILayout.Label(labelString, GUILayout.Width(100f));
+                    GUILayout.Label(labelString, GUILayout.Width(DrawerConstants.FixedWidth));
                 }               
                 GUILayout.BeginVertical();
                 foreach (var button in buttonDictionary)

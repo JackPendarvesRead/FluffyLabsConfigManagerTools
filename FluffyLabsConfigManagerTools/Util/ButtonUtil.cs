@@ -1,6 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
-using FluffyLabsConfigManagerTools.Drawers;
+using FluffyLabsConfigManagerTools.Drawer;
 using FluffyLabsConfigManagerTools.Infrastructure;
 using System;
 using System.Collections.Generic;

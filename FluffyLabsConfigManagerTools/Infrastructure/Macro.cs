@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-using FluffyLabsConfigManagerTools.Drawers;
+using FluffyLabsConfigManagerTools.Drawer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +14,31 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
         public string MacroString { get; set; }
         public int RepeatNumber { get; set; }
         public BepInEx.Configuration.KeyboardShortcut KeyboardShortcut { get; set; }
+
+        internal string KbsString
+        {
+            get
+            {
+                var sb = new StringBuilder();
+                sb.Append($"Main: {KeyboardShortcut.MainKey.ToString()}");
+                if (KeyboardShortcut.Modifiers.Count() > 0)
+                {
+                    sb.Append(", Mod: ");
+                    foreach (var mod in KeyboardShortcut.Modifiers)
+                    {
+                        if(mod == KeyboardShortcut.Modifiers.First())
+                        {
+                            sb.Append(mod.ToString());
+                        }
+                        else
+                        {
+                            sb.Append($" + {mod.ToString()}");
+                        }
+                    }
+                }
+                return sb.ToString();
+            }
+        }
 
         static Macro()
         {            

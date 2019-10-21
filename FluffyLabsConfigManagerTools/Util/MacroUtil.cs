@@ -37,7 +37,7 @@ namespace FluffyLabsConfigManagerTools.Util
             string key,
             string description)
         {
-            return AddMacroConfig(section, key, description, new ConfigurationManagerAttributes());
+            return AddMacroConfig(section, key, description, new ConfigurationManagerAttributes { HideDefaultButton = true });
         }
 
 

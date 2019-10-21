@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-using FluffyLabsConfigManagerTools.Drawers;
+using FluffyLabsConfigManagerTools.Drawer;
 using System;
 using System.Collections.Generic;
 using System.Linq;

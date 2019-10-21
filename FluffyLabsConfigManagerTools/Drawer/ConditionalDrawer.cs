@@ -10,7 +10,7 @@ using FluffyLabsConfigManagerTools.Infrastructure;
 using FluffyLabsConfigManagerTools.Interfaces;
 using UnityEngine;
 
-namespace FluffyLabsConfigManagerTools.Drawers
+namespace FluffyLabsConfigManagerTools.Drawer
 {
     internal class ConditionalDrawer<T> : IDrawer
         where T : struct, IConvertible
@@ -27,7 +27,7 @@ namespace FluffyLabsConfigManagerTools.Drawers
                 {
                     label = "Enabled";
                 }
-                var newCondition = GUILayout.Toggle(condition, label, GUILayout.Width(90f));
+                var newCondition = GUILayout.Toggle(condition, label, GUILayout.Width(DrawerConstants.FixedWidth));
                 if (condition != newCondition)
                 {
                     x.Condition = newCondition;

@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace FluffyLabsConfigManagerTools.Drawers
+namespace FluffyLabsConfigManagerTools.Drawer
 {
     internal class MacroDrawer : IDrawer
     {
@@ -21,11 +21,10 @@ namespace FluffyLabsConfigManagerTools.Drawers
                 DrawMacroStringBox(seb);
                 DrawRepeatCountBox(seb);
                 DrawKeyboardShortcutBox(seb);
-                GUILayout.Label("_____________________________________"); //I know this is ugly but its a temp solution
+                GUILayout.Space(20);
                 GUILayout.EndVertical();
             };
         }
-
 
         private Texture2D GetBackground()
         {
@@ -34,6 +33,7 @@ namespace FluffyLabsConfigManagerTools.Drawers
             background.Apply();
             return background;
         }
+
         private void DrawMacroStringBox(SettingEntryBase seb)
         {
             var style = new GUIStyle
@@ -42,8 +42,6 @@ namespace FluffyLabsConfigManagerTools.Drawers
                 wordWrap = true
             };
 
-            //GUILayout.BeginHorizontal();
-            //GUILayout.Label("MacroString");
             var macro = (Macro)seb.Get();
             var text = macro.MacroString;
             var result = GUILayout.TextField(text, style, GUILayout.ExpandWidth(true), GUILayout.MinHeight(80f));
@@ -59,16 +57,16 @@ namespace FluffyLabsConfigManagerTools.Drawers
                     Debug.LogError(ex);
                 }
             }
-            //GUILayout.EndHorizontal();
         }
 
         private void DrawRepeatCountBox(SettingEntryBase seb)
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Label("RepeatCount");
+            GUILayout.Label("RepeatCount", GUILayout.ExpandWidth(true));
+            GUILayout.FlexibleSpace();
             var macro = (Macro)seb.Get();
             var repeatCount = macro.RepeatNumber.ToString();
-            var result = GUILayout.TextField(repeatCount, GUILayout.ExpandWidth(true));
+            var result = GUILayout.TextField(repeatCount, GUILayout.Width(DrawerConstants.FixedWidth));
             if (result != repeatCount)
             {
                 try
@@ -91,83 +89,107 @@ namespace FluffyLabsConfigManagerTools.Drawers
             .ToArray();
 
         private List<KeyCode> keyCodeList = new List<KeyCode>();
-        private bool edittingKbs = false;
+        private SettingEntryBase currentKeyToSet;
         private void DrawKeyboardShortcutBox(SettingEntryBase seb)
         {
-
-            //TODO fix the multiple view edit!!
-
             GUILayout.BeginHorizontal();
-            var macro = (Macro)seb.Get();
-            if (edittingKbs)
+            if (seb == currentKeyToSet)
             {
-                GUIUtility.keyboardControl = -1;
-                Event e = Event.current;
-                if (e.isKey
-                    && _keysToCheck.Contains(e.keyCode)
-                    && !keyCodeList.Contains(e.keyCode))
-                {
-                    keyCodeList.Add(e.keyCode);
-                }
-
-                if (keyCodeList.Count > 0)
-                {
-                    var sb = new StringBuilder();
-                    foreach (var code in keyCodeList)
-                    {
-                        sb.Append(code.ToString());
-                        if (keyCodeList.Last() != code)
-                        {
-                            sb.Append(" + ");
-                        }
-                    }
-                    GUILayout.Label(sb.ToString(), GUILayout.ExpandWidth(true));
-                }
-                else
-                {
-                    GUILayout.Label("Press any key combination", GUILayout.ExpandWidth(true));
-                }
-
-                if (GUILayout.Button("OK", GUILayout.ExpandWidth(false)))
-                {
-                    if (keyCodeList.Count > 0)
-                    {
-                        if (keyCodeList.Count > 1)
-                        {
-                            macro.KeyboardShortcut = new BepInEx.Configuration.KeyboardShortcut(keyCodeList[0], keyCodeList.Skip(1).ToArray());
-                        }
-                        else
-                        {
-                            macro.KeyboardShortcut = new BepInEx.Configuration.KeyboardShortcut(keyCodeList[0]);
-                        }
-                        seb.Set(macro);
-                    }
-                    keyCodeList.Clear();
-                    edittingKbs = false;
-                }
-
-                if (GUILayout.Button("Cancel", GUILayout.ExpandWidth(false)))
-                {
-                    keyCodeList.Clear();
-                    edittingKbs = false;
-                }
+                DrawEdittingKeyboard(seb);
             }
             else
             {
-                GUILayout.Label("Shortcut: ");
-                if (GUILayout.Button(macro.KeyboardShortcut.ToString(), GUILayout.ExpandWidth(true)))
-                {
-                    edittingKbs = true;
-                }
-
-                if (GUILayout.Button("Clear", GUILayout.ExpandWidth(false)))
-                {
-                    macro.KeyboardShortcut = BepInEx.Configuration.KeyboardShortcut.Empty;
-                    seb.Set(macro);
-                    edittingKbs = false;
-                }
+                DrawAwaitingEditKeyboard(seb);
             }
             GUILayout.EndHorizontal();
+        }
+
+        private void DrawAwaitingEditKeyboard(SettingEntryBase seb)
+        {
+            var macro = (Macro)seb.Get();
+            GUILayout.Label("Shortcut:");
+            GUILayout.BeginVertical();
+            if (macro.KeyboardShortcut.MainKey == KeyCode.None)
+            {
+                GUILayout.Label("N/A", GUILayout.ExpandWidth(true));
+            }
+            else
+            {
+                GUILayout.Label($"(Main) {macro.KeyboardShortcut.MainKey.ToString()}", GUILayout.ExpandWidth(true));
+                foreach (var mod in macro.KeyboardShortcut.Modifiers)
+                {
+                    GUILayout.Label($"+ {mod.ToString()}", GUILayout.ExpandWidth(true));
+                }
+            }
+            GUILayout.EndVertical();
+            GUILayout.FlexibleSpace();
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("Edit", GUILayout.Width(DrawerConstants.FixedWidth)))
+            {
+                currentKeyToSet = seb;
+            }
+            if (GUILayout.Button("Clear", GUILayout.Width(DrawerConstants.FixedWidth)))
+            {
+                macro.KeyboardShortcut = BepInEx.Configuration.KeyboardShortcut.Empty;
+                seb.Set(macro);
+            }
+            GUILayout.EndVertical();
+        }
+
+        private void DrawEdittingKeyboard(SettingEntryBase seb)
+        {
+            var macro = (Macro)seb.Get();
+            GUIUtility.keyboardControl = -1;
+            Event e = Event.current;
+            if (e.isKey
+                && _keysToCheck.Contains(e.keyCode)
+                && !keyCodeList.Contains(e.keyCode))
+            {
+                keyCodeList.Add(e.keyCode);
+            }
+
+            if (keyCodeList.Count > 0)
+            {
+                var sb = new StringBuilder();
+                foreach (var code in keyCodeList)
+                {
+                    sb.Append(code.ToString());
+                    if (keyCodeList.Last() != code)
+                    {
+                        sb.Append(" + ");
+                    }
+                }
+                GUILayout.Label(sb.ToString(), GUILayout.ExpandWidth(true));
+            }
+            else
+            {
+                GUILayout.Label("Press any key combination", GUILayout.ExpandWidth(true));
+            }
+            GUILayout.FlexibleSpace();
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("OK", GUILayout.Width(DrawerConstants.FixedWidth)))
+            {
+                if (keyCodeList.Count > 0)
+                {
+                    if (keyCodeList.Count > 1)
+                    {
+                        macro.KeyboardShortcut = new BepInEx.Configuration.KeyboardShortcut(keyCodeList[0], keyCodeList.Skip(1).ToArray());
+                    }
+                    else
+                    {
+                        macro.KeyboardShortcut = new BepInEx.Configuration.KeyboardShortcut(keyCodeList[0]);
+                    }
+                    seb.Set(macro);
+                }
+                keyCodeList.Clear();
+                currentKeyToSet = null;
+            }
+            if (GUILayout.Button("Cancel", GUILayout.Width(DrawerConstants.FixedWidth)))
+            {
+                keyCodeList.Clear();
+                currentKeyToSet = null;
+            }
+            GUILayout.EndVertical();
         }
     }
 }
