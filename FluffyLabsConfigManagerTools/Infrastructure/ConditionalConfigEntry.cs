@@ -10,7 +10,7 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
     public class ConditionalConfigEntry<T>
        where T : struct, IConvertible
     {
-        private readonly ConfigEntry<Conditional<T>> configEntry;
+        private ConfigEntry<Conditional<T>> configEntry;
 
         internal ConditionalConfigEntry(ConfigEntry<Conditional<T>> configEntry)
         {
@@ -25,7 +25,11 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
             }
             set
             {
-                configEntry.Value.Value = value;                
+                configEntry.Value = new Conditional<T>
+                {
+                    Condition = configEntry.Value.Condition,
+                    Value = value
+                };
             }
         }
         public bool Condition
@@ -36,7 +40,11 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
             }
             set
             {
-                configEntry.Value.Condition = value;
+                configEntry.Value = new Conditional<T>
+                {
+                    Condition = value,
+                    Value = configEntry.Value.Value
+                };
             }
         }
     }

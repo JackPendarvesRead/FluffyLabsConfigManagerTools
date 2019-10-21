@@ -9,7 +9,7 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
 {
     public class MacroConfigEntry
     {
-        private readonly ConfigEntry<Macro> configEntry;
+        private ConfigEntry<Macro> configEntry;
 
         internal MacroConfigEntry(ConfigEntry<Macro> configEntry)
         {
@@ -24,7 +24,12 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
             }
             set
             {
-                configEntry.Value.MacroString = value;
+                configEntry.Value = new Macro
+                {
+                    KeyboardShortcut = configEntry.Value.KeyboardShortcut,
+                    MacroString = value,
+                    RepeatNumber = configEntry.Value.RepeatNumber
+                };
             }
         }
 
@@ -36,7 +41,12 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
             }
             set
             {
-                configEntry.Value.RepeatNumber = value;
+                configEntry.Value = new Macro
+                {
+                    KeyboardShortcut = configEntry.Value.KeyboardShortcut,
+                    MacroString = configEntry.Value.MacroString,
+                    RepeatNumber = value
+                };
             }
         }
 
@@ -48,7 +58,12 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
             }
             set
             {
-                configEntry.Value.KeyboardShortcut = value;
+                configEntry.Value = new Macro
+                {
+                    KeyboardShortcut = value,
+                    MacroString = configEntry.Value.MacroString,
+                    RepeatNumber = configEntry.Value.RepeatNumber
+                };
             }
         }
     }

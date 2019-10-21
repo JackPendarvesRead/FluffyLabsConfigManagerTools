@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace FluffyLabsConfigManagerTools.Infrastructure
 {
-    internal class Macro
+    public struct Macro
     {
         public string MacroString { get; set; }
         public int RepeatNumber { get; set; }
