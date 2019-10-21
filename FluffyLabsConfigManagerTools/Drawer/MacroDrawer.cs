@@ -176,7 +176,7 @@ namespace FluffyLabsConfigManagerTools.Drawer
             }
             else
             {
-                GUILayout.Label("Press any key combination", GUILayout.ExpandWidth(true));
+                GUILayout.Label("Press any key combination...", GUILayout.ExpandWidth(true));
             }
             GUILayout.FlexibleSpace();
             GUILayout.BeginVertical();

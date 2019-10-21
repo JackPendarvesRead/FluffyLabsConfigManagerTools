@@ -15,32 +15,7 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
         public bool isRepeating { get; set; }
         public int RepeatNumber { get; set; }
         public BepInEx.Configuration.KeyboardShortcut KeyboardShortcut { get; set; }
-
-        internal string KbsString
-        {
-            get
-            {
-                var sb = new StringBuilder();
-                sb.Append($"Main: {KeyboardShortcut.MainKey.ToString()}");
-                if (KeyboardShortcut.Modifiers.Count() > 0)
-                {
-                    sb.Append(", Mod: ");
-                    foreach (var mod in KeyboardShortcut.Modifiers)
-                    {
-                        if(mod == KeyboardShortcut.Modifiers.First())
-                        {
-                            sb.Append(mod.ToString());
-                        }
-                        else
-                        {
-                            sb.Append($" + {mod.ToString()}");
-                        }
-                    }
-                }
-                return sb.ToString();
-            }
-        }
-
+        
         static Macro()
         {            
             TomlTypeConverter.AddConverter(typeof(Macro), Macro.GetTypeConverter());
@@ -57,7 +32,10 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
                     {
                         var macro = (Macro)obj;
                         var kb = macro.KeyboardShortcut.Serialize();
-                        return macro.MacroString + SpecialCharacter.Delimiter + macro.RepeatNumber.ToString() + SpecialCharacter.Delimiter + kb;
+                        return macro.MacroString 
+                        + SpecialCharacter.Delimiter + macro.RepeatNumber.ToString() 
+                        + SpecialCharacter.Delimiter + kb 
+                        + SpecialCharacter.Delimiter + macro.isRepeating.ToString();
                     }
                     catch (Exception ex)
                     {
@@ -74,7 +52,8 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
                         {
                             MacroString = split[0],
                             RepeatNumber = Int32.Parse(split[1]),
-                            KeyboardShortcut = BepInEx.Configuration.KeyboardShortcut.Deserialize(split[2])
+                            KeyboardShortcut = BepInEx.Configuration.KeyboardShortcut.Deserialize(split[2]),
+                            isRepeating = bool.Parse(split[3])
                         };
                     }
                     catch (Exception ex)
