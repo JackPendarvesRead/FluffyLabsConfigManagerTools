@@ -186,7 +186,7 @@ namespace FluffyLabsConfigManagerTools.Drawer
                 {
                     if (keyCodeList.Count > 1)
                     {
-                        macro.KeyboardShortcut = new BepInEx.Configuration.KeyboardShortcut(keyCodeList[0], keyCodeList.Skip(1).ToArray());
+                        macro.KeyboardShortcut = new BepInEx.Configuration.KeyboardShortcut(keyCodeList.Last(), keyCodeList.Where(k => k != keyCodeList.Last()).ToArray());
                     }
                     else
                     {
