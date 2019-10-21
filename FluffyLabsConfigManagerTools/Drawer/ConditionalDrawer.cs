@@ -22,11 +22,7 @@ namespace FluffyLabsConfigManagerTools.Drawer
                 GUILayout.BeginHorizontal();
                 var x = (Conditional<T>)seb.Get();
                 var condition = x.Condition;
-                string label = "Disabled";
-                if (x.Condition)
-                {
-                    label = "Enabled";
-                }
+                string label = condition ? "Enabled" : "Disabled";
                 var newCondition = GUILayout.Toggle(condition, label, GUILayout.Width(DrawerConstants.FixedWidth));
                 if (condition != newCondition)
                 {

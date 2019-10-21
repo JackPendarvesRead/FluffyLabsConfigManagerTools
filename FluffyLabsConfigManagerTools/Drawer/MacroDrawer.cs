@@ -61,24 +61,37 @@ namespace FluffyLabsConfigManagerTools.Drawer
 
         private void DrawRepeatCountBox(SettingEntryBase seb)
         {
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("RepeatCount", GUILayout.ExpandWidth(true));
-            GUILayout.FlexibleSpace();
             var macro = (Macro)seb.Get();
-            var repeatCount = macro.RepeatNumber.ToString();
-            var result = GUILayout.TextField(repeatCount, GUILayout.Width(DrawerConstants.FixedWidth));
-            if (result != repeatCount)
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Repeat:", GUILayout.Width(DrawerConstants.FixedWidth));
+            var condition = macro.isRepeating;
+            string label = "";
+            //string label = condition ? "Enabled" : "Disabled";
+            var newCondition = GUILayout.Toggle(condition, label, GUILayout.Width(DrawerConstants.FixedWidth));
+            if (condition != newCondition)
             {
-                try
-                {
-                    macro.RepeatNumber = Int32.Parse(result);
-                    seb.Set(macro);
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError(ex);
-                }
+                macro.isRepeating = newCondition;
+                seb.Set(macro);
             }
+            GUILayout.FlexibleSpace();
+            if (macro.isRepeating)
+            {
+                var repeatCount = macro.RepeatNumber.ToString();
+                var result = GUILayout.TextField(repeatCount, GUILayout.Width(DrawerConstants.FixedWidth));
+                if (result != repeatCount)
+                {
+                    try
+                    {
+                        macro.RepeatNumber = Int32.Parse(result);
+                        seb.Set(macro);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError(ex);
+                    }
+                }
+            }            
             GUILayout.EndHorizontal();
         }
 
@@ -107,7 +120,7 @@ namespace FluffyLabsConfigManagerTools.Drawer
         private void DrawAwaitingEditKeyboard(SettingEntryBase seb)
         {
             var macro = (Macro)seb.Get();
-            GUILayout.Label("Shortcut:");
+            GUILayout.Label("Shortcut:", GUILayout.Width(DrawerConstants.FixedWidth));
             GUILayout.BeginVertical();
             if (macro.KeyboardShortcut.MainKey == KeyCode.None)
             {

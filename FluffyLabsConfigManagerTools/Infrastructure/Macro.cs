@@ -9,9 +9,10 @@ using UnityEngine;
 
 namespace FluffyLabsConfigManagerTools.Infrastructure
 {
-    public struct Macro
+    internal struct Macro
     {
         public string MacroString { get; set; }
+        public bool isRepeating { get; set; }
         public int RepeatNumber { get; set; }
         public BepInEx.Configuration.KeyboardShortcut KeyboardShortcut { get; set; }
 

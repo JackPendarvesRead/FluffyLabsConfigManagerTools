@@ -37,7 +37,15 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
         {
             get
             {
-                return configEntry.Value.RepeatNumber;
+                if (configEntry.Value.isRepeating)
+                {
+                    return configEntry.Value.RepeatNumber;
+                }
+                else
+                {
+                    return 1;
+                }
+
             }
             set
             {
