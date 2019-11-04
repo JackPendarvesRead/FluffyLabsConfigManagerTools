@@ -35,19 +35,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BepInEx">
-      <HintPath>E:\SteamLibrary\steamapps\common\Risk of Rain 2\BepInEx\core\BepInEx.dll</HintPath>
+      <HintPath>..\..\..\libs\RoR2Modding\BepInEx.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="BepInEx.Harmony">
-      <HintPath>E:\SteamLibrary\steamapps\common\Risk of Rain 2\BepInEx\core\BepInEx.Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx.MonoMod.Loader">
-      <HintPath>E:\SteamLibrary\steamapps\common\Risk of Rain 2\BepInEx\patchers\BepInEx.MonoMod.Loader\BepInEx.MonoMod.Loader.dll</HintPath>
+      <HintPath>..\..\..\libs\RoR2Modding\BepInEx.Harmony.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="BepInEx.Preloader">
-      <HintPath>E:\SteamLibrary\steamapps\common\Risk of Rain 2\BepInEx\core\BepInEx.Preloader.dll</HintPath>
+      <HintPath>..\..\..\libs\RoR2Modding\BepInEx.Preloader.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ConfigurationManager">
-      <HintPath>E:\SteamLibrary\steamapps\common\Risk of Rain 2\BepInEx\plugins\ConfigManager\ConfigurationManager.dll</HintPath>
+      <HintPath>..\..\BepInEx.ConfigurationManager\bin\BepInEx\plugins\ConfigurationManager.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,15 +60,19 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>E:\SteamLibrary\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>E:\SteamLibrary\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>E:\SteamLibrary\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>E:\SteamLibrary\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +82,7 @@
     <Compile Include="Drawer\MacroDrawer.cs" />
     <Compile Include="Extension\StringExtensionMethods.cs" />
     <Compile Include="Extension\TypeExtensionMethods.cs" />
+    <Compile Include="FluffyConfigLabsPlugin.cs" />
     <Compile Include="Infrastructure\Conditional.cs" />
     <Compile Include="Infrastructure\ConditionalConfigEntry.cs" />
     <Compile Include="Infrastructure\ConfigurationManagerAttributes.cs" />

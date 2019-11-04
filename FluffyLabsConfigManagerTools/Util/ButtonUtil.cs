@@ -87,7 +87,7 @@ namespace FluffyLabsConfigManagerTools.Util
             bool showLastPressedString,
             ConfigurationManagerAttributes attributes)
         {
-            return config.AddSetting<string>(
+            return config.Bind<string>(
                 section,
                 key,
                 "",

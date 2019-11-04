@@ -43,7 +43,7 @@ namespace FluffyLabsConfigManagerTools.Util
             ConfigDescription description)
             where T : struct, IConvertible
         {
-            var entry = config.AddSetting<Conditional<T>>(                
+            var entry = config.Bind<Conditional<T>>(                
                 section,
                 key,
                 new Conditional<T> { Condition = defaultCondition, Value = defaultValue },

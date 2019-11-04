@@ -54,7 +54,7 @@ namespace FluffyLabsConfigManagerTools.Util
         string description, 
         ConfigurationManagerAttributes attributes)
         {
-            var entry = config.AddSetting<Macro>(                
+            var entry = config.Bind<Macro>(                
                 section,                
                 key,               
                 new Macro
