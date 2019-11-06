@@ -25,6 +25,8 @@ This namespace gives you access to the classes and structs which hold the types 
 
 To enable XML comments intellisense be sure to leave `FluffyLabsConfigManagerTools.xml` in the same install location as `FluffyLabsConfigManagerTools.dll`
 
+Don't forget to add the attribute at the top of your plugin `[PluginDependency(FluffyLabsConfigManagerTools.FluffyConfigLabsPlugin.PluginGuid)]` to register this dependency for the chainloader.
+
 ## Utilities
 
 The most useful way to use this lib is through the utilities. The following is a quick summary of what there is and how it is used.
@@ -36,9 +38,7 @@ Adds a button configuration with customisable Action
 
 Example:
 ```csharp
-[BepInDependency("com.bepis.r2api")]
-[BepInPlugin("com.FluffyMods.FluffyLabsTest", "FluffyLabsTest", "0.0.0")]
-public class FluffyLabsTest2 : BaseUnityPlugin
+public class FluffyLabsTest : BaseUnityPlugin
 {
 	public void Awake()
 	{
@@ -68,8 +68,6 @@ Adds a configuration which has a value and can be enabled/disabled
 
 Example:
 ```csharp
-[BepInDependency("com.bepis.r2api")]
-[BepInPlugin("com.FluffyMods.FluffyLabsTest", "FluffyLabsTest", "0.0.0")]
 public class FluffyLabsTest : BaseUnityPlugin
 {
     private ConditionalConfigEntry<float> FloatConfig;
@@ -110,8 +108,6 @@ Adds a configuration specifically designed for adding a macro configuration
 
 Example:
 ```csharp
-[BepInDependency("com.bepis.r2api")]
-[BepInPlugin("com.FluffyMods.FluffyLabsTest", "FluffyLabsTest", "0.0.0")]
 public class FluffyLabsTest : BaseUnityPlugin
 {
     private MacroConfigEntry MyMacro1;
@@ -135,7 +131,6 @@ public class FluffyLabsTest : BaseUnityPlugin
 The following is an example showing a mixture of the utils together.
 
 ```
-    [BepInPlugin("com.FluffyMods.FluffyLabsTest", "FluffyLabsTest", "0.0.0")]
     public class FluffyLabsTest : BaseUnityPlugin
     {
         private ConditionalConfigEntry<int> ConditionalConf;
@@ -168,6 +163,9 @@ The following is an example showing a mixture of the utils together.
 If you have any issues you can usually find me on the ROR2 modding discord (@Fluffatron). Please bear in mind that as with all mods here this is something I do in my spare time so may not always be able to immediately fix any issues that you come up with. 
 
 ## Changelog
+
+v1.0.1
+- Added public constant PluginGuid for dependency reference
 
 v1.0.0
 - Released
