@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace FluffyLabsConfigManagerTools
 {
-    [PluginDependency(ConfigurationManager.ConfigurationManager.GUID)]
-    [PluginMetadata(PluginGuid, pluginName, pluginVersion)]
+    [BepInDependency(ConfigurationManager.ConfigurationManager.GUID)]
+    [BepInPlugin(PluginGuid, pluginName, pluginVersion)]
     public class FluffyConfigLabsPlugin : BaseUnityPlugin
     {
         public const string PluginGuid = "com.FluffyMods." + pluginName;

@@ -7,6 +7,7 @@ using BepInEx.Configuration;
 using ConfigurationManager;
 using FluffyLabsConfigManagerTools.Extension;
 using FluffyLabsConfigManagerTools.Infrastructure;
+using FluffyLabsConfigManagerTools.Infrastructure.Constant;
 using FluffyLabsConfigManagerTools.Interfaces;
 using UnityEngine;
 
@@ -20,25 +21,25 @@ namespace FluffyLabsConfigManagerTools.Drawer
             return (seb) =>
             {
                 GUILayout.BeginHorizontal();
-                var x = (Conditional<T>)seb.Get();
-                var condition = x.Condition;
+                var setting = (Conditional<T>)seb.Get();
+                var condition = setting.Condition;
                 string label = condition ? "Enabled" : "Disabled";
                 var newCondition = GUILayout.Toggle(condition, label, GUILayout.Width(DrawerConstants.FixedWidth));
                 if (condition != newCondition)
                 {
-                    x.Condition = newCondition;
-                    seb.Set(x);
+                    setting.Condition = newCondition;
+                    seb.Set(setting);
                 }
                 if (condition)
                 {
-                    var number = x.Value.FloatToString<T>();
+                    var number = setting.Value.FloatToString<T>();
                     var result = GUILayout.TextField(number, GUILayout.ExpandWidth(true));
                     if (result != number)
                     {
                         try
                         {
-                            x.Value = (T)Convert.ChangeType(result, typeof(T));
-                            seb.Set(x);
+                            setting.Value = (T)Convert.ChangeType(result, typeof(T));
+                            seb.Set(setting);
                         }    
                         catch (Exception ex)
                         {

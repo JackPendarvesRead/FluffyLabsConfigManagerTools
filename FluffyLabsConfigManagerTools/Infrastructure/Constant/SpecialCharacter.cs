@@ -9,5 +9,6 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
     internal static class SpecialCharacter
     {
         public static char Delimiter = '\0';
+        public static char Delimiter2 = '_';
     }
 }
