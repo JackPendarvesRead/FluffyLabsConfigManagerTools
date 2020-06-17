@@ -5,6 +5,7 @@ using FluffyLabsConfigManagerTools.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -18,28 +19,46 @@ namespace FluffyLabsConfigManagerTools.Drawer
             return (seb) =>
             {
                 var setting = (CheckboxTable)seb.Get();
-                var currentLabel = setting.Items.First().xLabel;
-
+                GUILayout.BeginVertical();
+                string currentLabel = setting.Items[0].xLabel;
                 GUILayout.BeginHorizontal();
-                GUILayout.Label(currentLabel);
                 foreach (CheckboxTableItem item in setting.Items)
                 {
-                    if(item.xLabel != currentLabel)
+                    if (item.xLabel != currentLabel)
                     {
-                        GUILayout.EndHorizontal();
                         currentLabel = item.xLabel;
-                        GUILayout.FlexibleSpace();
+                        GUILayout.EndHorizontal();
                         GUILayout.BeginHorizontal();
-                        GUILayout.Label(currentLabel);
                     }
-                    var newValue = GUILayout.Toggle(item.Value, item.yLabel, GUILayout.Width(DrawerConstants.FixedWidth));
-                    if (newValue != item.Value)
+                    var newValue = GUILayout.Toggle(item.Value, item.xLabel + item.yLabel, GUILayout.Width(DrawerConstants.FixedWidth));
+                    setting = SetValueIfChanged(seb, setting, item, newValue);
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.EndVertical();
+            };
+        }
+
+        private static CheckboxTable SetValueIfChanged(SettingEntryBase seb, CheckboxTable setting, CheckboxTableItem item, bool newValue)
+        {
+            if (newValue != item.Value)
+            {
+                var newList = new List<CheckboxTableItem>();
+                for (var i = 0; i < setting.Items.Count; i++)
+                {
+
+                    if (setting.Items[i].xLabel == item.xLabel && setting.Items[i].yLabel == item.yLabel)
                     {
-                        setting.SetValue(item.xLabel, item.yLabel, newValue);
-                        seb.Set(setting);
+                        newList.Add(new CheckboxTableItem(item.xLabel, item.yLabel, newValue));
+                    }
+                    else
+                    {
+                        newList.Add(setting.Items[i]);
                     }
                 }
-            };
+                setting.Items = newList;
+                seb.Set(setting);
+            }
+            return setting;
         }
     }
 }

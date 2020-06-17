@@ -1,5 +1,6 @@
 ﻿using BepInEx.Configuration;
 using FluffyLabsConfigManagerTools.Infrastructure;
+using FluffyLabsConfigManagerTools.Infrastructure.ConfigEntry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,13 @@ namespace FluffyLabsConfigManagerTools.Util
             string key,
             List<string> xLabels,
             List<string> yLabels,
-            ConfigDescription description)
+            string description)
         {
-            var entry = config.Bind<CheckboxTable>(section, key, new CheckboxTable(xLabels, yLabels), description);
+            var entry = config.Bind<CheckboxTable>(
+                section, 
+                key, 
+                new CheckboxTable(xLabels, yLabels), 
+                new ConfigDescription(description, null, new ConfigurationManagerAttributes() { HideDefaultButton = true, HideDrawSettingName = true }));
             return new CheckboxTableConfigEntry(entry);
         }
     }

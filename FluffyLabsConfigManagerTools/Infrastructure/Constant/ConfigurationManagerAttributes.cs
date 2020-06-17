@@ -55,6 +55,7 @@
         /// Force the "Reset" button to not be displayed, even if a valid DefaultValue is available. 
         /// </summary>
         public bool? HideDefaultButton;
+        public bool? HideDrawSettingName;
 
         /// <summary>
         /// Optional description shown when hovering over the setting.

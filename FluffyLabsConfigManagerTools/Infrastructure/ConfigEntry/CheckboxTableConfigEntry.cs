@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluffyLabsConfigManagerTools.Infrastructure
+namespace FluffyLabsConfigManagerTools.Infrastructure.ConfigEntry
 {
     public class CheckboxTableConfigEntry
     {
@@ -18,14 +18,8 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
 
         public bool GetValue(string xValue, string yValue)
         {
-            var entry = configEntry.Value.Items.Where(item => item.xLabel == xValue && item.yLabel == yValue).First();
+            var entry = configEntry.Value.Items.Where(item => item.xLabel == xValue && item.yLabel == yValue).FirstOrDefault();
             return entry.Value;
         }
-
-        //public bool GetValue(Func<CheckboxTableItem, bool> selector)
-        //{
-        //    var entry = configEntry.Value.Items.Where(selector).First();
-        //    return entry.Value;
-        //}
     }
 }

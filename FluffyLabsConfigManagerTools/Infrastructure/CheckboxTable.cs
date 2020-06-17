@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace FluffyLabsConfigManagerTools.Infrastructure
 {
-    internal class CheckboxTable
+    internal struct CheckboxTable
     {
         public List<CheckboxTableItem> Items { get; set; }
 
@@ -21,7 +21,7 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
 
         public CheckboxTable(List<string> xLabels, List<string> yLabels)
         {
-            
+            Items = new List<CheckboxTableItem>();
             foreach (var x in xLabels)
             {
                 foreach(var y in yLabels)
@@ -36,11 +36,13 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
             this.Items = Items;
         }
 
-        public void SetValue(string xValue, string yValue, bool newValue)
-        {
-            var entry = Items.Where(item => item.xLabel == xValue && item.yLabel == yValue).First();
-            entry.Value = newValue;
-        }
+        //public List<CheckboxTableItem> GetNewItemsList(string xValue, string yValue, bool newValue)
+        //{
+        //    var newItems = Items;
+        //    var changedEntry = newItems.Where(item => item.xLabel == xValue && item.yLabel == yValue).First();
+        //    changedEntry.Value = newValue;
+        //    return newItems;
+        //}
 
         private static TypeConverter GetTypeConverter()
         {
@@ -52,16 +54,24 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
                     {
                         var sb = new StringBuilder();
                         var table = (CheckboxTable)obj;
-                        foreach(var item in table.Items)
+
+                        for(var i =0; i < table.Items.Count; i++)
                         {
-                            sb.Append($"{item.xLabel}{SpecialCharacter.Delimiter2}{item.yLabel}{SpecialCharacter.Delimiter2}{item.Value}");
-                            sb.Append(SpecialCharacter.Delimiter);
+                            sb.Append(table.Items[i].xLabel + 
+                                SpecialCharacter.Delimiter2 +
+                                table.Items[i].yLabel +
+                                SpecialCharacter.Delimiter2 +
+                                table.Items[i].Value);
+                            if(i < table.Items.Count - 1)
+                            {
+                                sb.Append(SpecialCharacter.Delimiter);
+                            }
                         }
                         return sb.ToString();
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogError(ex);
+                        Debug.LogError("Exception caught in ConvertToString TypeConverter: " + ex);
                         throw;
                     }
                 },
@@ -85,7 +95,7 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogError(ex);
+                        Debug.LogError("Exception caught in ConvertToObject TypeConverter: " + ex);
                         throw;
                     }
                 }
