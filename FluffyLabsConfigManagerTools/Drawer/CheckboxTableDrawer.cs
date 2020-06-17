@@ -14,31 +14,79 @@ namespace FluffyLabsConfigManagerTools.Drawer
 {
     internal class CheckboxTableDrawer : IDrawer
     {
+        private static float fixedWidth;
+        private List<string> distinctXLabels;
+        private List<string> distinctYLabels;
+
+
+        //public CheckboxTableDrawer(List<string> xUnits, List<string> yUnits)
+        //{
+        //    distinctXLabels = xUnits.Distinct().ToList();
+        //    distinctYLabels = yUnits.Distinct().ToList();
+        //}
+
         public Action<SettingEntryBase> Draw()
         {
             return (seb) =>
             {
-                var setting = (CheckboxTable)seb.Get();
-                GUILayout.BeginVertical();
-                string currentLabel = setting.Items[0].xLabel;
-                GUILayout.BeginHorizontal();
-                foreach (CheckboxTableItem item in setting.Items)
+                var checkboxTable = (CheckboxTable)seb.Get();
+                fixedWidth = 500 / (distinctXLabels.Count + 1);
+                GUILayout.BeginVertical();                
+                DrawTopRowLabels(checkboxTable);
+                foreach (var yLabel in distinctYLabels)
                 {
-                    if (item.xLabel != currentLabel)
-                    {
-                        currentLabel = item.xLabel;
-                        GUILayout.EndHorizontal();
-                        GUILayout.BeginHorizontal();
-                    }
-                    var newValue = GUILayout.Toggle(item.Value, item.xLabel + item.yLabel, GUILayout.Width(DrawerConstants.FixedWidth));
-                    setting = SetValueIfChanged(seb, setting, item, newValue);
+                    DrawToggleRow(seb, checkboxTable, yLabel);
                 }
-                GUILayout.EndHorizontal();
+                //DrawToggles(seb, checkboxTable);
                 GUILayout.EndVertical();
             };
         }
 
-        private static CheckboxTable SetValueIfChanged(SettingEntryBase seb, CheckboxTable setting, CheckboxTableItem item, bool newValue)
+        private static void DrawToggleRow(SettingEntryBase seb, CheckboxTable checkboxTable, string yLabel)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(yLabel, GUILayout.Width(fixedWidth));
+            foreach (CheckboxTableItem item in checkboxTable.Items.Where(item => item.yLabel == yLabel))
+            {                
+                var newValue = GUILayout.Toggle(item.Value, "", GUILayout.Width(fixedWidth));
+                SetValueIfChanged(seb, checkboxTable, item, newValue);
+            }
+            GUILayout.EndHorizontal();
+        }
+
+        private static void DrawToggles(SettingEntryBase seb, CheckboxTable checkboxTable)
+        {
+            GUILayout.BeginHorizontal();
+            string currentLabel = checkboxTable.Items[0].yLabel;
+            GUILayout.Label(currentLabel, GUILayout.Width(fixedWidth));
+            foreach (CheckboxTableItem item in checkboxTable.Items)
+            {
+                if (item.yLabel != currentLabel)
+                {
+                    currentLabel = item.yLabel;
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(currentLabel, GUILayout.Width(fixedWidth));
+                }
+                var newValue = GUILayout.Toggle(item.Value, "", GUILayout.Width(fixedWidth));
+                SetValueIfChanged(seb, checkboxTable, item, newValue);
+            }
+            GUILayout.EndHorizontal();
+        }
+
+        private static void DrawTopRowLabels(CheckboxTable checkboxTable)
+        {
+
+            GUILayout.BeginHorizontal(GUILayout.Width(fixedWidth));
+            GUILayout.Label("", GUILayout.Width(fixedWidth));
+            foreach (var xLabel in checkboxTable.Items.Select(x => x.xLabel).Distinct())
+            {
+                GUILayout.Label(xLabel, GUILayout.Width(fixedWidth));
+            }
+            GUILayout.EndHorizontal();
+        }
+
+        private static void SetValueIfChanged(SettingEntryBase seb, CheckboxTable setting, CheckboxTableItem item, bool newValue)
         {
             if (newValue != item.Value)
             {
@@ -58,7 +106,6 @@ namespace FluffyLabsConfigManagerTools.Drawer
                 setting.Items = newList;
                 seb.Set(setting);
             }
-            return setting;
         }
     }
 }

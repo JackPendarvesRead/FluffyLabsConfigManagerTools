@@ -1,5 +1,4 @@
-﻿namespace FluffyLabsConfigManagerTools.Infrastructure
-{
+﻿
     /// <summary>
     /// Special class that controls how a setting is displayed inside ConfigurationManager.
     /// To use, make a new instance, assign any fields that you want to override, and pass it as a setting tag.
@@ -42,6 +41,12 @@
         public bool? Browsable;
 
         /// <summary>
+        /// Force the setting name to not be displayed. Should only be used with a <see cref="CustomDrawer"/> to get more space.
+        /// Can be used together with <see cref="HideDefaultButton"/> to gain even more space.
+        /// </summary>
+        public bool? HideSettingName;
+
+        /// <summary>
         /// Category the setting is under. Null to be directly under the plugin.
         /// </summary>
         public string Category;
@@ -55,7 +60,6 @@
         /// Force the "Reset" button to not be displayed, even if a valid DefaultValue is available. 
         /// </summary>
         public bool? HideDefaultButton;
-        public bool? HideDrawSettingName;
 
         /// <summary>
         /// Optional description shown when hovering over the setting.
@@ -94,4 +98,3 @@
         /// </summary>
         public System.Func<string, object> StrToObj;
     }
-}

@@ -18,13 +18,14 @@ namespace FluffyLabsConfigManagerTools.Infrastructure
             TomlTypeConverter.AddConverter(typeof(CheckboxTable), GetTypeConverter());
             ConfigurationManager.ConfigurationManager.RegisterCustomSettingDrawer(typeof(CheckboxTable), new CheckboxTableDrawer().Draw());
         }
+    
 
         public CheckboxTable(List<string> xLabels, List<string> yLabels)
         {
             Items = new List<CheckboxTableItem>();
-            foreach (var x in xLabels)
+            foreach (var y in yLabels)
             {
-                foreach(var y in yLabels)
+                foreach(var x in xLabels)
                 {
                     Items.Add(new CheckboxTableItem(x, y, true));
                 }

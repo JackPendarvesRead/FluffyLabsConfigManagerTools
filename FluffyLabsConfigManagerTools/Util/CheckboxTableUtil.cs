@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using FluffyLabsConfigManagerTools.Drawer;
 using FluffyLabsConfigManagerTools.Infrastructure;
 using FluffyLabsConfigManagerTools.Infrastructure.ConfigEntry;
 using System;
@@ -29,7 +30,11 @@ namespace FluffyLabsConfigManagerTools.Util
                 section, 
                 key, 
                 new CheckboxTable(xLabels, yLabels), 
-                new ConfigDescription(description, null, new ConfigurationManagerAttributes() { HideDefaultButton = true, HideDrawSettingName = true }));
+                new ConfigDescription(
+                    description, 
+                    null,
+                    new CheckboxTableDrawer(xLabels, yLabels),
+                    new ConfigurationManagerAttributes() { HideDefaultButton = true, HideSettingName = true }));
             return new CheckboxTableConfigEntry(entry);
         }
     }
