@@ -15,21 +15,15 @@ namespace FluffyLabsConfigManagerTools.Drawer
     internal class CheckboxTableDrawer : IDrawer
     {
         private static float fixedWidth;
-        private List<string> distinctXLabels;
-        private List<string> distinctYLabels;
-
-
-        //public CheckboxTableDrawer(List<string> xUnits, List<string> yUnits)
-        //{
-        //    distinctXLabels = xUnits.Distinct().ToList();
-        //    distinctYLabels = yUnits.Distinct().ToList();
-        //}
 
         public Action<SettingEntryBase> Draw()
         {
             return (seb) =>
             {
                 var checkboxTable = (CheckboxTable)seb.Get();
+                var distinctXLabels = checkboxTable.Items.Select(x => x.xLabel).Distinct().ToList();
+                var distinctYLabels = checkboxTable.Items.Select(x => x.yLabel).Distinct().ToList();
+
                 fixedWidth = 500 / (distinctXLabels.Count + 1);
                 GUILayout.BeginVertical();                
                 DrawTopRowLabels(checkboxTable);

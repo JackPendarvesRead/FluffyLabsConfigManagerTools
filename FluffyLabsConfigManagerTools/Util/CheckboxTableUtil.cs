@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace FluffyLabsConfigManagerTools.Util
 {
@@ -26,16 +27,31 @@ namespace FluffyLabsConfigManagerTools.Util
             List<string> yLabels,
             string description)
         {
-            var entry = config.Bind<CheckboxTable>(
-                section, 
-                key, 
-                new CheckboxTable(xLabels, yLabels), 
-                new ConfigDescription(
-                    description, 
-                    null,
-                    new CheckboxTableDrawer(xLabels, yLabels),
-                    new ConfigurationManagerAttributes() { HideDefaultButton = true, HideSettingName = true }));
-            return new CheckboxTableConfigEntry(entry);
+            var newDefault = new CheckboxTable(xLabels, yLabels);
+            var configDefinition = new ConfigDefinition(section, key);
+            var configDescription = new ConfigDescription(description, null, new ConfigurationManagerAttributes() { HideDefaultButton = true, HideSettingName = true });
+            Debug.Log("Trying to find entry...");
+            if (config.TryGetEntry<CheckboxTable>(configDefinition, out ConfigEntry<CheckboxTable> currentEntry))
+            {
+                Debug.Log("GOT THE CURRENT ENTRY");
+                var currentDefault = (CheckboxTable)currentEntry.DefaultValue;
+                if (!newDefault.Items.Select(x => x.xLabel).Equals(currentDefault.Items.Select(x => x.xLabel)) ||
+                    !newDefault.Items.Select(x => x.yLabel).Equals(currentDefault.Items.Select(x => x.yLabel)))
+                {
+                    Debug.Log("IT DIDNT MATCH");
+                    currentEntry.Value = newDefault;
+                }
+                else
+                {
+                    Debug.Log("IT MATCHED!!!");
+                }
+            }
+            else
+            {
+                Debug.Log("Didn't find entry");
+            }
+            var newEntry = config.Bind<CheckboxTable>(configDefinition, newDefault, configDescription);
+            return new CheckboxTableConfigEntry(newEntry);
         }
     }
 }
